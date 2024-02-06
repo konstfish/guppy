@@ -1,0 +1,10 @@
+---
+
+- name: main
+  hosts: all
+  serial: 5
+  roles:
+    - geerlingguy.docker
+    - prepare-rpi
+    - basic-setup
+    - k3s

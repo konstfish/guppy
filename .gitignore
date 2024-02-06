@@ -1,0 +1,6 @@
+all.yml
+terraform/k3s.yaml
+.env
+.terraform*
+.DS_Store
+*tfstate*
