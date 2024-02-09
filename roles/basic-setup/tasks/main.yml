@@ -1,5 +1,15 @@
 ---
 
+# apt update
+- name: Update apt cache
+  apt:
+    update_cache: "yes"
+
+- name: Install git
+  apt:
+    name: git
+    state: present
+
 - name: Install zsh
   apt:
     name: zsh
@@ -13,6 +23,11 @@
 - name: Install cifs-utils
   apt:
     name: cifs-utils
+    state: present
+
+- name: Install open-iscsi
+  apt:
+    name: open-iscsi
     state: present
 
 # wheel
@@ -33,7 +48,7 @@
   user:
     name: "{{ user_name }}"
     shell: /bin/zsh
-    groups: sudo,docker,wheel
+    groups: sudo,wheel
     append: yes
 
 - name: Set login shell of user {{ user_name }} to `/bin/zsh` with `usermod`

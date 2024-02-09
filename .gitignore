@@ -1,4 +1,4 @@
-all.yml
+k3s_cluster.yml
 terraform/k3s.yaml
 .env
 .terraform*

@@ -24,11 +24,19 @@ resource "helm_release" "cloudflare_tunnel_ingress_controller" {
   timeout = 100
 }
 
+resource "helm_release" "longhorn" {
+  name             = "longhorn"
+  repository       = "https://charts.longhorn.io"
+  chart            = "longhorn"
+  namespace        = "longhorn-system"
+  create_namespace = true
+}
+
 resource "helm_release" "nfs_subdir_external_provisioner" {
-  name       = "nfs-subdir-external-provisioner"
-  repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/"
-  chart      = "nfs-subdir-external-provisioner"
-  namespace  = "nfs-provisioner"
+  name             = "nfs-subdir-external-provisioner"
+  repository       = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/"
+  chart            = "nfs-subdir-external-provisioner"
+  namespace        = "nfs-provisioner"
   create_namespace = true
 
   set {
@@ -40,7 +48,7 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
     value = var.nfs_path
   }
   set {
-    name = "nfs.nfs.mountOptions"
+    name  = "nfs.nfs.mountOptions"
     value = var.nfs_mount_options
   }
 

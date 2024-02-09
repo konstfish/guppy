@@ -28,7 +28,7 @@ variable "nfs_server" {
 variable "nfs_path" {
   description = "The NFS path to use for persistent storage."
   type        = string
-  default     = "/mnt/md0/stor"
+  default     = "/mnt/md0/stor/k3s"
 }
 
 variable "nfs_mount_options" {
