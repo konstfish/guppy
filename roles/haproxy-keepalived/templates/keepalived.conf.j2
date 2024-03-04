@@ -4,7 +4,7 @@ vrrp_script chk_haproxy {
 }
 
 vrrp_instance haproxy-vip {
-    interface {{ cluster_lb_internal_interface }}
+    interface {{ lb_interface }}
     state {% if inventory_hostname == groups['server'][0] %}MASTER{% else %}BACKUP{% endif %}
     
     priority {% if inventory_hostname == groups['server'][0] %}200{% else %}100{% endif %}
@@ -21,7 +21,7 @@ vrrp_instance haproxy-vip {
     }
 
     virtual_ipaddress {
-        {{ cluster_lb_internal_ip }}/32 brd {{ hostvars[inventory_hostname]['ansible_host'] }} dev {{ cluster_lb_internal_interface }} label {{ cluster_lb_internal_interface }}:10
+        {{ lb_address }}/24 brd label {{ lb_interface }}:10
     }
 
     track_script {
