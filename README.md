@@ -1,4 +1,4 @@
-# shoal
+# guppy
 
 https://en.wikipedia.org/wiki/Shoaling_and_schooling
 
