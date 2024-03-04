@@ -11,5 +11,6 @@ fix for now is to just `mv k3s-ansible/playbooks/* k3s-ansible/`
 ## Run me
 1. Adjust your group vars from the base one in [inventory/group_vars/k3s_cluster.example.yml](inventory/group_vars/k3s_cluster.example.yml)
 2. Adjust the [inventory/group_vars/hosts.yml](inventory/group_vars/hosts.yml) file
-3. `make install`
-4. `cd terraform && terraform init && terraform apply`
+3. `git submodule init && git submodule update`
+4. `make install`
+5. `cd terraform && terraform init && terraform apply`

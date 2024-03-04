@@ -8,10 +8,12 @@ github_user: konstfish
 k3s_version: v1.27.6+k3s1
 token: "asdf"
 api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
-# extra_server_args: "--node-ip {{ hostvars[inventory_hostname].ansible_host }} --disable=traefik --kube-apiserver-arg default-not-ready-toleration-seconds=10 --kube-apiserver-arg default-unreachable-toleration-seconds=10 --kube-controller-arg node-monitor-period=10s --kube-controller-arg node-monitor-grace-period=10s --kubelet-arg node-status-update-frequency=5s"
-extra_server_args: ""
-# extra_agent_args: "--kubelet-arg node-status-update-frequency=5s"
+extra_server_args: "--tls-san {{ lb_address }} --node-ip {{ hostvars[inventory_hostname].ansible_host }} --disable=traefik --disable=servicelb --disable=local-storage"
 extra_agent_args: ""
+
+lb_address: 10.0.1.50
+lb_interface: eth0
+lb_port: 6440
 
 # Optional vars
 # api_port: 6443

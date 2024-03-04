@@ -41,5 +41,5 @@
   hosts: server[0]
   become: true
   roles:
-    - role: k3s-post
-      cluster_name: "shoal"
+    - role: k3s-post-lb
+      cluster_name: "guppy"

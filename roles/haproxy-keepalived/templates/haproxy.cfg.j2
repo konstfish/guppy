@@ -1,5 +1,5 @@
 frontend k3s-frontend
-    bind *:6444
+    bind *:{{ lb_port }}
     mode tcp
     option tcplog
     default_backend k3s-backend
