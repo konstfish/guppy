@@ -1,10 +1,20 @@
-resource "helm_release" "cloudflare_tunnel_ingress_controller" {
-  name             = "cloudflare-tunnel-ingress-controller"
-  repository       = "https://helm.strrl.dev"
-  chart            = "cloudflare-tunnel-ingress-controller"
-  namespace        = "cloudflare-tunnel-ingress-controller"
-  create_namespace = true
+resource "kubernetes_namespace" "cloudflare_tunnel_ingress_controller" {
+  metadata {
+    name = "cloudflare-tunnel-ingress-controller"
+    labels = {
+      "field.cattle.io/projectId" = "system"
+    }
+    annotations = {
+      "management.cattle.io/system-namespace" : "true"
+    }
+  }
+}
 
+resource "helm_release" "cloudflare_tunnel_ingress_controller" {
+  name       = "cloudflare-tunnel-ingress-controller"
+  repository = "https://helm.strrl.dev"
+  chart      = "cloudflare-tunnel-ingress-controller"
+  namespace  = "cloudflare-tunnel-ingress-controller"
 
   set {
     name  = "cloudflare.apiToken"
@@ -22,35 +32,8 @@ resource "helm_release" "cloudflare_tunnel_ingress_controller" {
   }
 
   timeout = 100
-}
 
-resource "helm_release" "longhorn" {
-  name             = "longhorn"
-  repository       = "https://charts.longhorn.io"
-  chart            = "longhorn"
-  namespace        = "longhorn-system"
-  create_namespace = true
-}
-
-resource "helm_release" "nfs_subdir_external_provisioner" {
-  name             = "nfs-subdir-external-provisioner"
-  repository       = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/"
-  chart            = "nfs-subdir-external-provisioner"
-  namespace        = "nfs-provisioner"
-  create_namespace = true
-
-  set {
-    name  = "nfs.server"
-    value = var.nfs_server
-  }
-  set {
-    name  = "nfs.path"
-    value = var.nfs_path
-  }
-  set {
-    name  = "nfs.nfs.mountOptions"
-    value = var.nfs_mount_options
-  }
-
-  timeout = 100
+  depends_on = [
+    kubernetes_namespace.cloudflare_tunnel_ingress_controller
+  ]
 }
