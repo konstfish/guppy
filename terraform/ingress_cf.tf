@@ -5,7 +5,7 @@ resource "kubernetes_namespace" "cloudflare_tunnel_ingress_controller" {
       "field.cattle.io/projectId" = "system"
     }
     annotations = {
-      "management.cattle.io/system-namespace" : "true"
+      "management.cattle.io/system-namespace" = "true"
     }
   }
 }
@@ -54,5 +54,5 @@ variable "cloudflare_acount_id" {
 variable "cloudflare_tunnel_name" {
   description = "The name for the Cloudflare Tunnel (will be created by helm chart)."
   type        = string
-  default     = "shoal"
+  default     = "guppy"
 }

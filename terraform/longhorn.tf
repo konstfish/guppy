@@ -5,7 +5,7 @@ resource "kubernetes_namespace" "longhorn_system" {
       "field.cattle.io/projectId" = "system"
     }
     annotations = {
-      "management.cattle.io/system-namespace" : "true"
+      "management.cattle.io/system-namespace" = "true"
     }
   }
 }
