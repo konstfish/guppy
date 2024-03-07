@@ -46,43 +46,25 @@ resource "helm_release" "longhorn" {
   depends_on = [kubernetes_namespace.longhorn_system, kubernetes_secret.longhorn_backup_secret]
 }
 
-
-// NFS
-
-resource "kubernetes_namespace" "nfs_provisioner" {
-  metadata {
-    name = "nfs-provisioner"
-    labels = {
-      "field.cattle.io/projectId" = "system"
-    }
-    annotations = {
-      "management.cattle.io/system-namespace" : "true"
-    }
-  }
+// variables
+variable "longhorn_s3_access_key" {
+  description = "The Access Key ID for the Longhorn S3 backup."
+  type        = string
+  sensitive   = true
 }
 
-resource "helm_release" "nfs_subdir_external_provisioner" {
-  name       = "nfs-subdir-external-provisioner"
-  repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/"
-  chart      = "nfs-subdir-external-provisioner"
-  namespace  = "nfs-provisioner"
+variable "longhorn_s3_secret_key" {
+  description = "The Secret Key for the Longhorn S3 backup."
+  type        = string
+  sensitive   = true
+}
 
-  set {
-    name  = "nfs.server"
-    value = var.nfs_server
-  }
-  set {
-    name  = "nfs.path"
-    value = var.nfs_path
-  }
-  set {
-    name  = "nfs.nfs.mountOptions"
-    value = var.nfs_mount_options
-  }
+variable "longhorn_s3_endpoint" {
+  description = "The S3 endpoint to use for Longhorn backups."
+  type        = string
+}
 
-  timeout = 100
-
-  depends_on = [
-    kubernetes_namespace.nfs_provisioner
-  ]
+variable "longhorn_s3_bucket" {
+  description = "The S3 bucket to use for Longhorn backups."
+  type        = string
 }
