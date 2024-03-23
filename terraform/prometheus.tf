@@ -6,7 +6,7 @@ resource "helm_release" "prometheus_stack" {
   create_namespace = true
 
   values = [
-    file("${path.module}/helm/prometheus-stack/values.yml")
+    file("${path.module}/cluster/helm/prometheus-stack/values.yml")
   ]
 }
 
@@ -17,7 +17,7 @@ resource "helm_release" "grafana_tempo" {
   namespace  = "monitoring"
 
   values = [
-    file("${path.module}/helm/tempo/values.yml")
+    file("${path.module}/cluster/helm/tempo/values.yml")
   ]
 
   depends_on = [

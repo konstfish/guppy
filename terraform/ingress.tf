@@ -10,7 +10,7 @@ resource "helm_release" "ingress_nginx" {
   create_namespace = true
 
   values = [
-    file("${path.module}/helm/nginx/values.yml"),
+    file("${path.module}/cluster/helm/nginx/values.yml"),
   ]
 
   set {
