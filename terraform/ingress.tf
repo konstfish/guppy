@@ -20,10 +20,10 @@ resource "helm_release" "ingress_nginx" {
 }
 
 resource "helm_release" "external_dns" {
-  name       = "external-dns"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "external-dns"
-  namespace  = "external-dns"
+  name             = "external-dns"
+  repository       = "https://charts.bitnami.com/bitnami"
+  chart            = "external-dns"
+  namespace        = "external-dns"
   create_namespace = true
   set {
     name  = "provider"
