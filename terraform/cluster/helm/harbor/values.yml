@@ -1,3 +1,24 @@
+externalURL: https://harbor.konst.fish
+
+expose:
+  ingress:
+    className: nginx
+    hosts:
+      core: harbor.konst.fish
+    harbor:
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-http"
+        external-dns.alpha.kubernetes.io/hostname: "harbor.konst.fish"
+  tls:
+    secret: 
+      secretName: harbor-tls
+
+
+persistence:
+  persistentVolumeClaim:
+    registry:
+      storageClass: nfs-client
+
 nginx:
   image:
     repository: ghcr.io/octohelm/harbor/nginx-photon
@@ -35,6 +56,7 @@ trivy:
     tag: v2.10.1
 
 database:
+  internal:
     image:
       repository: ghcr.io/octohelm/harbor/harbor-db
       tag: v2.10.1
