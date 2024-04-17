@@ -52,7 +52,7 @@ resource "helm_release" "istio_ingress" {
   ]
 
   set {
-    name  = "controller.service.externalIPs[0]"
+    name  = "defaults.service.externalIPs[0]"
     value = data.http.runner_public_ip.response_body
   }
 
