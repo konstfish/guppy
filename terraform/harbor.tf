@@ -1,4 +1,4 @@
-resource "helm_release" "harbor" {
+/*resource "helm_release" "harbor" {
   name             = "harbor"
   repository       = "https://helm.goharbor.io"
   chart            = "harbor"
@@ -8,4 +8,4 @@ resource "helm_release" "harbor" {
   values = [
     file("${path.module}/cluster/helm/harbor/values.yml")
   ]
-}
+}*/

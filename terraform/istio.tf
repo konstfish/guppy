@@ -40,7 +40,7 @@ resource "helm_release" "istiod" {
   depends_on = [ helm_release.istio ]
 }
 
-resource "helm_release" "istio_ingress" {
+/*resource "helm_release" "istio_ingress" {
   name             = "istio-ingress"
   repository       = "https://istio-release.storage.googleapis.com/charts"
   chart            = "gateway"
@@ -71,4 +71,4 @@ resource "helm_release" "kiali" {
   namespace        = "istio-system"
 
   depends_on = [ helm_release.istiod ]
-}
+}*/
