@@ -1,0 +1,6 @@
+---
+
+- name: main
+  hosts: shoal-01
+  roles:
+    - k3s-post
