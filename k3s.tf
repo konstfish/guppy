@@ -25,7 +25,7 @@ resource "local_file" "ansible_inventory" {
     k3s_version            = var.cluster_k3s_version,
     token                  = var.cluster_token,
     lb_public_address      = hcloud_load_balancer.lb.ipv4
-    cluster_lb_internal_ip = hcloud_load_balancer_network.lb_network.ip
+    lb_internal_address = hcloud_load_balancer_network.lb_network.ip
   })
   filename = "${path.module}/ansible/inventory.yml"
 

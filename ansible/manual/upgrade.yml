@@ -1,8 +1,0 @@
----
-
-- import_playbook: ./k3s-ansible/upgrade.yml
-
-- name: main
-  hosts: shoal-01
-  roles:
-    - k3s-post
