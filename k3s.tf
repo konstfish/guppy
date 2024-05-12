@@ -19,22 +19,38 @@ locals {
 }
 
 resource "local_file" "ansible_inventory" {
-  content = templatefile("${path.module}/ansible/inventory.tpl", {
-    controller_nodes       = local.controller_nodes,
-    worker_nodes           = null,
-    k3s_version            = var.cluster_k3s_version,
-    token                  = var.cluster_token,
-    lb_public_address      = hcloud_load_balancer.lb.ipv4
-    lb_internal_address = hcloud_load_balancer_network.lb_network.ip
+  content = templatefile("${path.module}/k3s-ansible/inventory.tpl", {
+    controller_nodes = local.controller_nodes,
+    worker_nodes     = null,
+
+    ansible_user    = "pi",
+    ansible_ssh_key = "/Users/david/.ssh/id_ansible",
+
+    user_name   = "david",
+    github_user = "konstfish",
+
+    k3s_version  = "v1.27.6+k3s1",
+    k3s_token    = var.cluster_token,
+    cluster_name = "guppy",
+    cluster_type = "raspberry",
+
+    lb_public_address   = "10.0.1.50"
+    lb_internal_address = "10.0.1.50"
+    lb_interface        = "eth0"
+    lb_port             = 6440
+
+    extra_server_args = ""
+    cluster_cidr      = "10.42.0.0/16"
+    service_cidr      = "10.43.0.0/16"
   })
-  filename = "${path.module}/ansible/inventory.yml"
+  filename = "${path.module}/k3s-ansible/inventory.yml"
 
   provisioner "local-exec" {
     command     = <<EOT
       sleep 10 # wait for nodes to be ready
-      ansible-playbook -i inventory.yml playbook.yml -u pi --private-key=/Users/david/.ssh/id_ansible --extra-vars "kubeconfig_localhost=true kubeconfig_localhost_ansible_host=false"
+      ansible-playbook -i inventory.yml playbook/install.yml --extra-vars "kubeconfig_localhost=true kubeconfig_localhost_ansible_host=false"
     EOT
-    working_dir = "ansible"
+    working_dir = "k3s-ansible"
     environment = {
       ANSIBLE_HOST_KEY_CHECKING = "false"
     }
